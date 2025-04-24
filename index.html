@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asistente UIP</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #d1eaff, #f2f6ff);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px;
+      border: 2px solid #007acc;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 42px;
+      font-weight: bold;
+      color: #007acc;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #003b6f;
+    }
+
+    .chat-box {
+      background: #e6f2ff;
+      padding: 16px;
+      border-left: 4px solid #007acc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .icon {
+      font-size: 24px;
+    }
+
+    .message {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+
+    .submit-btn, .reset-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+
+    .submit-btn:hover,
+    .reset-btn:hover {
+      background-color: #005c99;
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 36px;
+        max-width: 500px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+
+      .submit-btn, .reset-btn {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="logo">uip</div>
+      <div class="title">Universidad<br>Interamericana de<br>Panamá</div>
+    </div>
+    <div class="chat-box">
+      <div class="icon">😊</div>
+      <div class="message">
+        Hola! Soy el asistente de carreras de la Universidad Interamericana de Panamá. Estoy aquí para ayudarte a encontrar la carrera ideal para ti.
+      </div>
+    </div>
+    <form class="form">
+      <label for="intereses">Intereses</label>
+      <input type="text" id="intereses" placeholder="">
+
+      <label for="habilidades">Habilidades</label>
+      <input type="text" id="habilidades" placeholder="">
+
+      <label for="metas">Metas</label>
+      <input type="text" id="metas" placeholder="">
+
+      <button type="button" id="mostrar-btn" class="submit-btn">Ver carrera recomendada</button>
+      <button type="button" id="reset-btn" class="reset-btn">Reiniciar</button>
+    </form>
+  </div>
+
+  <div id="resultado-container" style="width: 100%; max-width: 420px;"></div>
+
+  <script>
+    const mostrarBtn = document.getElementById('mostrar-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const resultadoContainer = document.getElementById('resultado-container');
+
+    const interesesInput = document.getElementById('intereses');
+    const habilidadesInput = document.getElementById('habilidades');
+    const metasInput = document.getElementById('metas');
+
+    let contador = 1;
+
+    const carreras = [
+      {
+        nombre: "Ingeniería en Sistemas",
+        descripcion: "Desarrolla y gestiona sistemas tecnológicos, software y redes.",
+        razones: "Ideal si te interesa la tecnología, la lógica y la resolución de problemas."
+      },
+      {
+        nombre: "Ciencia de Datos",
+        descripcion: "Analiza grandes volúmenes de datos para obtener conclusiones útiles.",
+        razones: "Perfecta si tienes habilidades analíticas y te gustan los números."
+      },
+      {
+        nombre: "Diseño Gráfico",
+        descripcion: "Crea contenido visual para marcas, productos y medios digitales.",
+        razones: "Buena opción si te apasiona lo visual, creativo y el diseño."
+      },
+      {
+        nombre: "Psicología Organizacional",
+        descripcion: "Estudia el comportamiento humano en contextos laborales.",
+        razones: "Recomendada si te interesa ayudar a las personas y mejorar ambientes de trabajo."
+      },
+      {
+        nombre: "Administración de Empresas",
+        descripcion: "Gestiona recursos, personas y procesos en una organización.",
+        razones: "Si tienes habilidades para liderar, planificar y tomar decisiones."
+      }
+    ];
+
+    mostrarBtn.addEventListener('click', () => {
+      const intereses = interesesInput.value;
+      const habilidades = habilidadesInput.value;
+      const metas = metasInput.value;
+
+      const sugerencia = carreras[Math.floor(Math.random() * carreras.length)];
+
+      const resultadoBox = document.createElement('div');
+      resultadoBox.classList.add('chat-box');
+      resultadoBox.innerHTML = `
+        <div class="icon">🎓</div>
+        <div class="message">
+          <strong>${contador++}. ${sugerencia.nombre}</strong><br>
+          <em>${sugerencia.descripcion}</em><br><br>
+          <strong>¿Por qué?</strong> ${sugerencia.razones}<br>
+          <strong>Tus intereses:</strong> ${intereses || "No especificado"}<br>
+          <strong>Habilidades:</strong> ${habilidades || "No especificado"}<br>
+          <strong>Metas:</strong> ${metas || "No especificado"}
+        </div>
+      `;
+      resultadoContainer.appendChild(resultadoBox);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      interesesInput.value = '';
+      habilidadesInput.value = '';
+      metasInput.value = '';
+      resultadoContainer.innerHTML = '';
+      contador = 1;
+    });
+  </script>
+</body>
+</html>

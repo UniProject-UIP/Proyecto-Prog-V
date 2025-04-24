@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asistente UIP</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #d1eaff, #f2f6ff);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px;
+      border: 2px solid #007acc;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 42px;
+      font-weight: bold;
+      color: #007acc;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #003b6f;
+    }
+
+    .chat-box {
+      background: #e6f2ff;
+      padding: 16px;
+      border-left: 4px solid #007acc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .icon {
+      font-size: 24px;
+    }
+
+    .message {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+
+    .submit-btn, .reset-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #007acc;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+
+    .submit-btn:hover,
+    .reset-btn:hover {
+      background-color: #005c99;
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 36px;
+        max-width: 500px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+
+      .submit-btn, .reset-btn {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="logo">uip</div>
+      <div class="title">Universidad<br>Interamericana de<br>Panamá</div>
+    </div>
+    <div class="chat-box">
+      <div class="icon">😊</div>
+      <div class="message">
+        Hola! Soy el asistente de carreras de la Universidad Interamericana de Panamá. Estoy aquí para ayudarte a encontrar la carrera ideal para ti.
+      </div>
+    </div>
+
+    <form class="form" action="/enviar_informacion/" method="POST">
+      <label for="intereses">Intereses</label>
+      <input type="text" id="intereses" name="intereses" placeholder="">
+
+      <label for="habilidades">Habilidades</label>
+      <input type="text" id="habilidades" name="habilidades" placeholder="">
+
+      <label for="metas">Metas</label>
+      <input type="text" id="metas" name="metas" placeholder="">
+
+      <button type="submit" class="submit-btn">Enviar</button>
+      <button type="reset" class="reset-btn">Reiniciar</button>
+    </form>
+  </div>
+
+  {% if recomendacion %}
+  <div class="chat-box">
+    <div class="icon">🎓</div>
+    <div class="message">
+      {{ recomendacion }}
+    </div>
+  </div>
+  {% endif %}
+</body>
+</html>
